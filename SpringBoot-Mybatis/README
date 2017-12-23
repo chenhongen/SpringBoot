@@ -1,0 +1,31 @@
+# 搭建过程记录
+
+## 通过sts工具，新建sb项目
+同时准备好一个数据库(oracle，mysql等)，本教程采用oracle.
+
+## 修改pom.xml，引入所需jar
+* DAO层：Mybatis
+* 连接池：druid
+* 数据库驱动：oracle
+* 分页插件：pagehelper
+* 辅助工具：generator（使用方法写在generatorConfig.xml中,表随便建张用户表就行）
+
+## application.yml配置数据源等信息
+
+## 编写service、controller等
+实际项目开发中建议 提取service通用接口、通用的查询example、自定义分页实体等。
+
+## 页面使用miniui
+
+## 添加DruidConfig.java配置druid后台，监控sql
+
+
+## 找不到dao
+启动类添加包扫描
+@MapperScan(basePackages = "com.che.dao")
+
+> 个人主页：rebey.cn
+
+
+
+
