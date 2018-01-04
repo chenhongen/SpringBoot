@@ -1,0 +1,57 @@
+server: 
+  port: 8081
+
+spring:
+  mvc:
+    throw-exception-if-no-handler-found: true
+    view:
+      prefix: /WEB-INF/jsp/
+      suffix: .jsp
+      
+  datasource:
+    # 驱动配置信息
+    type: com.alibaba.druid.pool.DruidDataSource
+    url: jdbc:oracle:thin:@127.0.0.1:1521/ORCL
+    username: iamsuser
+    password: iamsuser
+    driver-class-name: oracle.jdbc.OracleDriver
+    # 连接池的配置信息
+    initialSize: 2
+    minIdle: 2
+    maxActive: 30
+    maxWait: 60000
+    # 配置监控统计拦截的filters
+    filters: stat
+    # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+    timeBetweenEvictionRunsMillis: 60000
+    # 配置一个连接在池中最小生存的时间，单位是毫秒
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: SELECT 1 FROM DUAL
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    # 打开PSCache，并且指定每个连接上PSCache的大小
+    poolPreparedStatements: true
+    maxOpenPreparedStatements: 20
+#    webStatFilter:
+#      urlPattern: /*
+#      exclusions: '*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*'
+#    statViewServlet:
+#      urlPattern: /druid/*
+#      loginUsername: che
+#      loginPassword: che #000000时无效
+    
+mybatis:
+  type-aliases-package: com.mes.pojo.po
+  mapper-locations: classpath:mapper/*.xml
+  
+pagehelper:
+  helperDialect: oracle
+  reasonable: true
+  supportMethodsArguments: true
+  params: count=countSql
+    
+shiro:
+  loginUrl: /router/login
+  successUrl: /router/index
+  unauthorizedUrl: /router/login
