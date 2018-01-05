@@ -1,0 +1,25 @@
+# 搭建过程记录
+
+## 整合前两个demo的Mybatis和Jsper作为基础，有些许调整。
+
+## pom.xml引入shiro-spring-boot-web-starter。
+
+## application.yml
+shiro:
+  loginUrl: /router/login
+  successUrl: /router/index
+  unauthorizedUrl: /router/login
+  
+## MyRealm和ShiroConfig
+
+## 提供了shiro标签、Session、加密
+
+## 账号密码
+账号：che
+加密前：000000
+加密后：6b4e8374b1b9c193260ef3b9072e2fd0
+> 个人主页：rebey.cn
+
+
+
+
