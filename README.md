@@ -7,8 +7,12 @@ Some projects about Spring Boot.
 - Mybatis 
 - Jsper 整合JSP页面
 - Parent 多模块项目
-- More will come soon ...
 
+# More will come soon ...
+- Websocket 201805
+- Swagger2  201805
+- Ehcache   201805
+- React     201806
 
 # Download single
 use Repo Downloader that is a browser plug-in.
