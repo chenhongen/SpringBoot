@@ -1,0 +1,89 @@
+
+server: 
+  port: 8081
+  tomcat:
+    uri-encoding: utf-8
+  servlet:
+    context-path: /vfs
+
+spring:
+  # 多环境配置
+  profiles:
+    active: dev
+  mvc:
+    throw-exception-if-no-handler-found: true
+#    view:
+#      prefix: /WEB-INF/jsp/
+#      suffix: .jsp
+    static-path-pattern: /**
+  http:
+    encoding:
+      charset: utf-8
+      force: true
+      enabled: true
+      
+#  devtools:
+#    restart:
+#      enabled: true
+      #classpath目录下的WEB-INF文件夹内容修改不重启
+      #exclude: WEB-INF/**
+  datasource:
+    # 驱动配置信息
+    type: com.alibaba.druid.pool.DruidDataSource
+    url: jdbc:oracle:thin:@192.168.1.199:1521/orcl
+    username: vfs10user
+    password: vfs10
+    driver-class-name: oracle.jdbc.driver.OracleDriver
+    # 连接池的配置信息
+    initialSize: 2
+    minIdle: 2
+    maxActive: 30
+    maxWait: 60000
+    # 配置监控统计拦截的filters
+    filters: stat
+    # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+    timeBetweenEvictionRunsMillis: 60000
+    # 配置一个连接在池中最小生存的时间，单位是毫秒
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: SELECT 1 FROM DUAL
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    # 打开PSCache，并且指定每个连接上PSCache的大小
+    poolPreparedStatements: true
+    maxOpenPreparedStatements: 20
+#    webStatFilter:
+#      urlPattern: /*
+#      exclusions: '*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*'
+#    statViewServlet:
+#      urlPattern: /druid/*
+#      loginUsername: che
+#      loginPassword: che #000000时无效
+
+
+  #spring.thymeleaf.encoding=UTF-8
+  # ;charset=<encoding> is added
+  #spring.thymeleaf.content-type=text/html
+  # 以上默认开启
+#  thymeleaf:
+#    cache: false # set to false for hot refresh
+#    #mode: LEGACYHTML5 #nekohtml
+#    prefix: classpath:/templates/
+#    suffix: .html
+
+mybatis:
+  type-aliases-package: com.atoz.vfs.pojo.po
+  mapper-locations: classpath:mapper/*.xml
+
+# 通用mapper
+#mapper:
+#  mappers:
+#    - com.mes.util.CommonMapper
+#  not-empty: false
+#  i-d-e-n-t-i-t-y: ORACLE
+
+pagehelper:
+    helperDialect: oracle
+    reasonable: true
+    supportMethodsArguments: true
+    params: count=countSql

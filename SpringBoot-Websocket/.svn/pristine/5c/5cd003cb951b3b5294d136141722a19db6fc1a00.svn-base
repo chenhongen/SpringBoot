@@ -1,0 +1,87 @@
+// <!-- auto generated navs start -->
+const autoGenHeaderNavs = [];
+const autoGenAsideNavs = [];
+
+// <!-- auto generated navs end -->
+
+const customHeaderNavs = [
+  {
+    text: '首页',
+    to: '/scan',
+    icon: 'home',
+    role: '1',
+  },
+  {
+    text: '数据维护',
+    icon: 'jichushezhi',
+    role: '1',
+    children: [
+      {
+        text: '订单号/VIN码/G码',
+        to: '/ving',
+      },
+      {
+        text: '生产线/工位',
+        to: '/station',
+      },
+      {
+        text: '生产线/节拍',
+        to: '/workshop',
+      },
+    ],
+  },
+  {
+    text: '首页',
+    role: '0',
+    to: '/play',
+    icon: 'home',
+  },
+  {
+    text: '帮助',
+    to: '/no',
+    role: '0,1',
+    //external: true,
+    //newWindow: true,
+    icon: 'livehelp',
+  },
+];
+
+const customAsideNavs = [
+  // {
+  //   text: '首页',
+  //   to: '/scan',
+  //   icon: 'home',
+  // },
+  // {
+  //   text: '用户管理',
+  //   to: '/user',
+  //   icon: 'yonghu',
+  // },
+  // {
+  //   text: '系统设置',
+  //   to: '/setting',
+  //   icon: 'shezhi',
+  //   children: [
+  //     {
+  //       text: '基本设置',
+  //       to: '/base',
+  //     },
+  //     {
+  //       text: '评论设置',
+  //       to: '/comment',
+  //     },
+  //   ],
+  // },
+];
+
+function transform(navs) {
+  // custom logical
+  return [...navs];
+}
+
+export const headerNavs = transform([
+  ...autoGenHeaderNavs,
+  ...customHeaderNavs,
+]);
+
+export const asideNavs = transform([...autoGenAsideNavs, ...customAsideNavs]);

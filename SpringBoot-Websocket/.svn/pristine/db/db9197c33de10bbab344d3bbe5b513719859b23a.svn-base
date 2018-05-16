@@ -1,0 +1,68 @@
+package com.atoz.vfs.controller;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.atoz.vfs.common.Constants.ResultCode;
+import com.atoz.vfs.pojo.po.Vving;
+import com.atoz.vfs.pojo.po.Vworkshopstation;
+import com.atoz.vfs.pojo.vo.ResultVO;
+import com.atoz.vfs.service.IVstationService;
+import com.atoz.vfs.service.IVvingService;
+
+/**
+ * 接受vin查询g、工位、物料、文件
+ * @author che
+ *
+ */
+@RestController
+@RequestMapping("/play")
+public class VplayController {
+	
+	@Resource
+	private IVstationService vstationService;
+	@Resource
+	private IVvingService vingService;
+	
+	
+	/**
+	 * 接受vin查询g、工位
+	 * @param vinCode
+	 * @return
+	 */
+	@RequestMapping(method=RequestMethod.GET)
+	public ResultVO getGAndStation(@RequestParam String vinCode,@RequestParam String mac, HttpServletRequest request){
+		if(mac == null && vinCode == null)
+			return new ResultVO().error(ResultCode.FAIL, "vinCode或mac为空！");
+		
+		// 获取工位信息
+		Vworkshopstation station = new Vworkshopstation();
+		station.setStationMac(mac);
+		station = vstationService.selectByTemp(station);
+		
+		Vving ving = new Vving();
+		ving.setVinCode(vinCode);
+		// 获取g
+		ving = vingService.selectByTemp(ving);
+		
+		Map<String, Object> data = new HashMap<>();
+		data.put("stationCode", station.getStationCode());
+		data.put("gCode", ving.getgCode());
+		data.put("vinCode", vinCode);
+		data.put("workshopCode", station.getWorkshopCode());
+		data.put("dmsno", ving.getDmsno());
+		
+		return new ResultVO().ok(data);
+	}
+	
+	
+	
+}

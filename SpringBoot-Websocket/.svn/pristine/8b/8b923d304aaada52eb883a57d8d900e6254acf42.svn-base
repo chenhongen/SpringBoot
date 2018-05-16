@@ -1,0 +1,88 @@
+package com.atoz.vfs.controller;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.atoz.vfs.common.Constants.ResultCode;
+import com.atoz.vfs.pojo.po.Vfile;
+import com.atoz.vfs.pojo.po.Vving;
+import com.atoz.vfs.pojo.po.Vworkshopstation;
+import com.atoz.vfs.pojo.vo.FileVO;
+import com.atoz.vfs.pojo.vo.ResultVO;
+import com.atoz.vfs.service.IVfileService;
+import com.atoz.vfs.service.IVstationService;
+import com.atoz.vfs.service.IVvingService;
+import com.atoz.vfs.common.Constants;
+/**
+ * 接受vin查询g、工位、物料、文件
+ * @author che
+ *
+ */
+@RestController
+@RequestMapping("/play")
+public class VplayController {
+	
+	@Resource
+	private IVstationService vstationService;
+	@Resource
+	private IVvingService vingService;
+	@Resource
+	private IVfileService vfileService;
+	
+	/**
+	 * 接受vin查询g、工位
+	 * @param vinCode
+	 * @return
+	 */
+	@RequestMapping(method=RequestMethod.GET)
+	public ResultVO getGAndStation(@RequestParam String vinCode,@RequestParam String mac, HttpServletRequest request){
+		if(mac == null && vinCode == null)
+			return new ResultVO().error(ResultCode.FAIL, "vinCode或mac为空！");
+		
+		Map<String, Object> data = new HashMap<>();
+		Map<String, Object> base = new HashMap<>();
+		
+		// 获取工位信息
+		Vworkshopstation stationTemp = new Vworkshopstation();
+		stationTemp.setStationMac(mac);
+		stationTemp = vstationService.selectByTemp(stationTemp);
+		
+		Vving vingTemp = new Vving();
+		vingTemp.setVinCode(vinCode);
+		// 获取g
+		vingTemp = vingService.selectByTemp(vingTemp);
+		
+		Vfile fileTemp = new Vfile();
+		fileTemp.setgCode(vingTemp.getgCode());
+
+		List<Vfile> files = vfileService.listByTemplate(fileTemp);
+		List<FileVO> file = files.stream()
+				.map(f -> new FileVO(f.getFilePath() + "/" + f.getSaveName(), Constants.VIDEO_TYPE))
+				.collect(Collectors.toList());
+		
+		data.put("file", file); // 同类型文件播放是否存在顺序？
+		
+		base.put("stationCode", stationTemp.getStationCode());
+		base.put("gCode", vingTemp.getgCode());
+		base.put("vinCode", vinCode);
+		base.put("workshopCode", stationTemp.getWorkshopCode());
+		base.put("dmsno", vingTemp.getDmsno());
+		
+		data.put("base", base);
+		
+		return new ResultVO().ok(data);
+	}
+	
+	
+	
+}

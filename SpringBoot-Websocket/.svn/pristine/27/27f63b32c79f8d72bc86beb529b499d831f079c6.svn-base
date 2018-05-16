@@ -1,0 +1,136 @@
+import React, { Component } from 'react';
+import Img from '@icedesign/img';
+import DataBinder from '@icedesign/data-binder';
+import { Table  } from '@icedesign/base';
+import IceContainer from '@icedesign/container';
+
+@DataBinder({
+  tableData: {
+    url: 'material/list',
+    responseFormatter: (responseHandler, res, originResponse) => {
+      if(res.data.list == null)
+        res.data.list = [];
+      res = {
+        status: res.message,
+        //success: res.code === "200" ? true : false,
+        //message: res.message,
+        data: res.data
+      };
+      responseHandler(res, originResponse);
+    },
+    method: 'post',
+    data: {},
+    defaultBindingData: {
+      list: [],
+      total: 100,
+      pageSize: 10,
+    },
+  },
+})
+export default class MaterialList extends Component {
+  // 父组件
+  // switchVideo = (video) => {
+  //   if (this.props.onClick) {
+  //     this.props.onClick(video);
+  //   }
+  // };
+  constructor(props) {
+    super(props);
+
+    // 查询实体
+    //const CONST_CRITERION = ;
+
+    // 请求参数缓存
+    this.queryCache = {};
+    this.state = {
+      filterFormValue: {
+        criteria: {
+          criterion: [
+            {value: this.props.dmsno , property: 'dmsno', condition: '='},
+            {value: this.props.stationCode, property: 'stationCode', condition: '='},
+            {value: this.props.workshopCode, property: 'workshopCode', condition: '='},
+            {value: '1', property: 'activeFlag', condition: '='}
+          ]
+        }
+      },
+    };
+  }
+
+  componentDidMount() {
+    this.queryCache = {
+      pageSize: this.props.bindingData.tableData.pageSize,
+      ...this.state.filterFormValue,
+    };
+  }
+
+  // 父组件->子组件,父组件state更新后出发子组件props更新，需加判断避免无限循环
+  componentWillReceiveProps(nextProps) {
+      if(this.state.filterFormValue.criteria.criterion[0].value != nextProps.dmsno) {
+        this.setState({
+          filterFormValue: {
+            criteria: {
+              criterion: [
+                {value: nextProps.dmsno , property: 'dmsno', condition: '='},
+                {value: nextProps.stationCode, property: 'stationCode', condition: '='},
+                {value: nextProps.workshopCode, property: 'workshopCode', condition: '='},
+              ]
+            }
+          }
+        })
+        this.fetchData();
+      }
+  }
+
+  fetchData = () => {
+    this.props.updateBindingData('tableData', {
+      data: {
+        ...this.queryCache
+      },
+    });
+  };
+
+  render() {
+    const tableData = this.props.bindingData.tableData;
+    // const { list, currentVideo } = this.props;
+
+    return (
+      <IceContainer >
+        <Table
+          dataSource={tableData.list}
+          isLoading={tableData.__loading}
+          primaryKey={'materialId'}
+        >
+          <Table.Column title="物料编号" dataIndex="materialCode" width={100} />
+          <Table.Column title="物料名称" dataIndex="materialName" width={100} />
+          <Table.Column title="物料数量" dataIndex="materialCount" width={70} />
+        </Table>
+        {/*<div style={styles.pagination}>
+          <Pagination
+            defaultCurrent={tableData.currentPage}
+            pageSize={tableData.pageSize}
+            total={tableData.total}
+            onChange={this.changePage} />
+        </div>*/}
+      </IceContainer>
+    );
+  }
+}
+
+const styles = {
+  batchBtn: {
+    marginRight: '10px',
+  },
+  IceContainer: {
+    marginBottom: '20px',
+    minHeight: 'auto',
+    display: 'flex',
+    /*justifyContent: 'space-between',*/
+  },
+  removeBtn: {
+    marginLeft: 10,
+  },
+  pagination: {
+    textAlign: 'right',
+    paddingTop: '26px',
+  },
+};

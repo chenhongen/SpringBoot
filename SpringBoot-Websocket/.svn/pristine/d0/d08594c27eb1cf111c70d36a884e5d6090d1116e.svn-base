@@ -1,0 +1,13 @@
+import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
+import DynamicIcon from 'dynamic-icon';
+import Const from '../const';
+
+// 使用 custom 生成自定义 ICON 组件
+const CustomIcon = DynamicIcon.create({
+  fontFamily: 'iconfont',
+  prefix: 'icon',
+  css: Const.SERVER_URL+'/iconfont.css'
+});
+
+export default CustomIcon;

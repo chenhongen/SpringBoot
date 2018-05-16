@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mes.dao.CriteriaEntity">
+	<sql id="Base_Condition_Clause">
+		<if test="criterion.value != null and criterion.value != ''">
+			<choose>
+				<when test="criterion.equal">
+					${criterion.property} = <![CDATA[ ']]>${criterion.value}<![CDATA[' ]]>
+				</when>
+				<when test="criterion.like and criterion.likeAll">
+					${criterion.property} like <![CDATA[ ']]>%${criterion.value}%<![CDATA[' ]]>
+				</when>
+				<when test="criterion.like and criterion.likeRight">
+					${criterion.property} like <![CDATA[ ']]>${criterion.value}%<![CDATA[' ]]>
+				</when>
+				<when test="criterion.like and criterion.likeLeft">
+					${criterion.property} like <![CDATA[ ']]>%${criterion.value}<![CDATA[' ]]>
+				</when>
+				<when test="criterion.between">
+					${criterion.property} between ${criterion.value} and ${criterion.secondValue}
+				</when>
+				<when test="criterion.ifIn">
+					${criterion.property} in ( ${criterion.value} )
+				</when>
+				<when test="criterion.ifNotIn">
+					${criterion.property} not in ( ${criterion.value} )
+				</when>
+				<when test="criterion.ifNull">
+					${criterion.property} IS NULL
+				</when>
+				<when test="criterion.ifNotNull">
+					${criterion.property} IS NOT NULL
+				</when>
+				<!-- 无condition默认使用= -->
+				<otherwise>
+					${criterion.property} = <![CDATA[ ']]>${criterion.value}<![CDATA[' ]]>
+				</otherwise>
+			</choose>
+		</if>
+	</sql>
+	<sql id="Base_Criteria_Clause">
+		<if test="criterion != null">
+			<trim prefix="(" suffix=")">
+				<foreach collection="criterion" item="criterion" separator="and">
+					<include refid="com.mes.dao.CriteriaEntity.Base_Condition_Clause"></include>
+				</foreach>
+			</trim>
+		</if>
+	</sql>
+	<sql id="Base_OrCriteria_Clause">
+		<if test="orCriterion != null">
+			<trim prefix="(" suffix=")" suffixOverrides="and" >
+				<foreach collection="orCriterion" item="orCriterion" separator="or">
+					<trim prefix="(" suffix=")">
+						<foreach collection="orCriterion.criterion" item="criterion" separator="and">
+							<include refid="com.mes.dao.CriteriaEntity.Base_Condition_Clause"></include>
+						</foreach>
+					</trim>
+				</foreach>
+			</trim>
+		</if>
+	</sql>
+	<sql id="Example_Where_Clause">
+		<where>
+			<trim prefix="(" suffix=")" suffixOverrides="and" prefixOverrides="and">
+				<include refid="com.mes.dao.CriteriaEntity.Base_Criteria_Clause"></include>
+				and 1 = 1 and
+				<include refid="com.mes.dao.CriteriaEntity.Base_OrCriteria_Clause"></include>
+			</trim>
+		</where>
+	</sql>
+	
+	<sql id="BaseCri_Criteria_Clause">
+		<if test="criteria.criterion != null">
+			<trim prefix="(" suffix=")">
+				<foreach collection="criteria.criterion" item="criterion" separator="and">
+					<include refid="com.mes.dao.CriteriaEntity.Base_Condition_Clause"></include>
+				</foreach>
+			</trim>
+		</if>
+	</sql>
+	<sql id="BaseCri_OrCriteria_Clause">
+		<if test="criteria.orCriterion != null">
+			<trim prefix="(" suffix=")" suffixOverrides="and" >
+				<foreach collection="criteria.orCriterion" item="orCriterion" separator="or">
+					<trim prefix="(" suffix=")">
+						<foreach collection="orCriterion.criterion" item="criterion" separator="and">
+							<include refid="com.mes.dao.CriteriaEntity.Base_Condition_Clause"></include>
+						</foreach>
+					</trim>
+				</foreach>
+			</trim>
+		</if>
+	</sql>
+	<sql id="Criteria_Where_Clause">
+		<where>
+			<trim prefix="(" suffix=")" suffixOverrides="and" prefixOverrides="and">
+				<if test="criteria != null">
+					<include refid="com.mes.dao.CriteriaEntity.BaseCri_Criteria_Clause"></include>
+				</if>
+					and 1 = 1 and
+				<if test="criteria != null">
+					<include refid="com.mes.dao.CriteriaEntity.BaseCri_OrCriteria_Clause"></include>
+				</if>
+			</trim>
+		</where>
+	</sql>
+	<sql id="Criteria_Clause">
+		<trim prefix="(" suffix=")" suffixOverrides="and" prefixOverrides="and">
+			<if test="criteria != null">
+				<include refid="com.mes.dao.CriteriaEntity.BaseCri_Criteria_Clause"></include>
+			</if>
+				and 1 = 1 and
+			<if test="criteria != null">
+				<include refid="com.mes.dao.CriteriaEntity.BaseCri_OrCriteria_Clause"></include>
+			</if>
+		</trim>
+	</sql>
+</mapper>

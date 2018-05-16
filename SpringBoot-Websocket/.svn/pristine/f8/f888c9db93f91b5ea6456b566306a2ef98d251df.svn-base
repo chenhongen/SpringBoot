@@ -1,0 +1,27 @@
+import { observable } from 'mobx'
+import axios from 'axios';
+
+// 使用MOBX获取MAC地址
+class MobxData {
+
+  @observable MOBX_DATA = {};
+
+  constructor() {
+   this.getMAC()
+  }
+
+  getMAC() {
+    var that = this;
+    axios.get('./station/nav', {})
+    .then(function (response) {
+        that.MOBX_DATA =  response.data.data
+
+        console.log("执行了============"+that.MOBX_DATA)
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+  }
+
+}
+export default new MobxData()

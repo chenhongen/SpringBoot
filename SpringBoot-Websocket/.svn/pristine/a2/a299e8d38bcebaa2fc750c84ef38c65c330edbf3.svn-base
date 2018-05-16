@@ -1,0 +1,68 @@
+package com.atoz.vfs.service.impl;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.atoz.vfs.dao.VfileMapper;
+import com.atoz.vfs.pojo.CriteriaEntity;
+import com.atoz.vfs.pojo.po.Vfile;
+import com.atoz.vfs.service.IVfileService;
+/**
+ * 物料模块实现
+ * @author che
+ *
+ */
+@Service
+public class VfileServiceImpl implements IVfileService {
+	@Autowired
+	private VfileMapper mapper;
+
+	@Override
+	public Vfile selectEntityByKey(String key) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Vfile> listByTemplate(Vfile object) {
+		return mapper.listByTemp(object);
+	}
+
+	@Override
+	public List<Vfile> listByCriteria(CriteriaEntity<Vfile> criteria) {
+		return mapper.selectByExample(criteria);
+	}
+
+	@Override
+	public int saveEntity(Vfile entity) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int deleteEntityByKey(Long key) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int deleteEntityByKeys(String keys) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int insertEntity(Vfile entity) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int updateEntity(Vfile entity) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+}

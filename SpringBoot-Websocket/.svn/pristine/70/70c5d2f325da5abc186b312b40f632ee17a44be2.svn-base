@@ -1,0 +1,18 @@
+package com.atoz.vfs.service;
+
+import com.atoz.vfs.pojo.po.Vving;
+import com.atoz.vfs.service.IService;
+
+/**
+ * vin、g、订单号关系维护接口
+ * @author che
+ *
+ */
+public interface IVvingService extends IService<Vving> {
+	/**
+	 * 查询实体（一般用于唯一属性）
+	 * @param temp
+	 * @return
+	 */
+	public Vving selectByTemp(Vving temp);
+}

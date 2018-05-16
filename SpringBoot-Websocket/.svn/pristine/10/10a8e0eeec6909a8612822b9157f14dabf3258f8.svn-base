@@ -1,0 +1,77 @@
+package com.atoz.vfs.service.impl;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.atoz.vfs.dao.VvingMapper;
+import com.atoz.vfs.pojo.CriteriaEntity;
+import com.atoz.vfs.pojo.po.Vving;
+import com.atoz.vfs.service.IVvingService;
+
+/**
+ * vin、g、订单号关系维护实现
+ * @author che
+ *
+ */
+@Service
+public class VvingServiceImpl implements IVvingService {
+	@Autowired
+	private VvingMapper mapper;
+
+	@Override
+	public Vving selectEntityByKey(String key) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Vving> listByTemplate(Vving object) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Vving> listByCriteria(CriteriaEntity<Vving> criteria) {
+		return mapper.selectByExample(criteria);
+	}
+
+	@Override
+	public int saveEntity(Vving entity) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int deleteEntityByKey(Long key) {
+		return mapper.deleteByPrimaryKey(key);
+	}
+
+	@Override
+	public int insertEntity(Vving entity) {
+		entity.setActiveFlag((short) 1);
+//		Date date = new Date();
+//		entity.setCreateDate(date);
+//		entity.setUpdateDate(date);
+		
+		return mapper.insertSelective(entity);
+	}
+
+	@Override
+	public int updateEntity(Vving entity) {
+		return mapper.updateByPrimaryKeySelective(entity);
+	}
+
+	@Override
+	public Vving selectByTemp(Vving record) {
+		return mapper.selectByTemp(record);
+	}
+
+	@Override
+	public int deleteEntityByKeys(String keys) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+}

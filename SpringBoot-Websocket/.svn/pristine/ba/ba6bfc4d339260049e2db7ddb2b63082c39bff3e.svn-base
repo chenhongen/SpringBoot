@@ -1,0 +1,77 @@
+package com.atoz.vfs.pojo.po;
+
+import java.io.Serializable;
+
+public class Currentstation implements Serializable {
+    private Long stationId;
+    private String factoryCode;
+    private String workshopLine;
+    //private String stationCode;
+    private Short stationOrder;
+    private String stationMac;
+    private String workshopCode;
+    private String dmsno;
+    private String vinCode;
+    public Currentstation(Long stationId, String factoryCode, String workshopLine, Short stationOrder,
+			String stationMac, String workshopCode, String dmsno, String vinCode) {
+		super();
+		this.stationId = stationId;
+		this.factoryCode = factoryCode;
+		this.workshopLine = workshopLine;
+		this.stationOrder = stationOrder;
+		this.stationMac = stationMac;
+		this.workshopCode = workshopCode;
+		this.dmsno = dmsno;
+		this.vinCode = vinCode;
+	}
+	private static final long serialVersionUID = 1L;
+	public Long getStationId() {
+		return stationId;
+	}
+	public void setStationId(Long stationId) {
+		this.stationId = stationId;
+	}
+	public String getFactoryCode() {
+		return factoryCode;
+	}
+	public void setFactoryCode(String factoryCode) {
+		this.factoryCode = factoryCode;
+	}
+	public String getWorkshopLine() {
+		return workshopLine;
+	}
+	public void setWorkshopLine(String workshopLine) {
+		this.workshopLine = workshopLine;
+	}
+	public Short getStationOrder() {
+		return stationOrder;
+	}
+	public void setStationOrder(Short stationOrder) {
+		this.stationOrder = stationOrder;
+	}
+	public String getStationMac() {
+		return stationMac;
+	}
+	public void setStationMac(String stationMac) {
+		this.stationMac = stationMac;
+	}
+	public String getWorkshopCode() {
+		return workshopCode;
+	}
+	public void setWorkshopCode(String workshopCode) {
+		this.workshopCode = workshopCode;
+	}
+	public String getDmsno() {
+		return dmsno;
+	}
+	public void setDmsno(String dmsno) {
+		this.dmsno = dmsno;
+	}
+	public String getVinCode() {
+		return vinCode;
+	}
+	public void setVinCode(String vinCode) {
+		this.vinCode = vinCode;
+	}
+  
+}

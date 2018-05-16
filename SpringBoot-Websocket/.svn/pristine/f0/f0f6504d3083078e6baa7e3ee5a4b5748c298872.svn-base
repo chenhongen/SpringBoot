@@ -1,0 +1,10 @@
+package com.atoz.vfs.service;
+
+import com.atoz.vfs.pojo.po.Vworkshopstation;
+import com.atoz.vfs.service.IService;
+
+public interface IVstationService extends IService<Vworkshopstation> {
+
+	Vworkshopstation selectByMac(Vworkshopstation station);
+	
+}

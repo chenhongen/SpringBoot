@@ -1,0 +1,162 @@
+import React, { Component } from 'react';
+import axios from 'axios';
+import { Dialog, Button, Icon, Form, Input, Field } from '@icedesign/base';
+import IceContainer from '@icedesign/container';
+import { enquireScreen } from 'enquire-js';
+
+const FormItem = Form.Item;
+
+export default class FormDialog extends Component {
+  static displayName = 'FormDialog';
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      visible: false,
+      isMobile: false,
+      //dataIndex: null,
+    };
+    this.field = new Field(this, {autoUnmount: true});
+  }
+
+  handleSubmit = () => {
+    this.field.validate((errors, values) => {
+      if (errors) {
+        console.log('Errors in form!!!');
+        return;
+      }
+
+      //const { dataIndex } = this.state;
+      //this.props.getFormValues(dataIndex, values);
+
+      axios.post('./station', values)
+      .then(function (response) {
+        console.log(response);
+        that.props.fetchData();
+        that.setState({
+          visible: false,
+        });
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+    });
+  };
+
+  componentDidMount() {
+    this.enquireScreenRegister();
+  }
+
+  enquireScreenRegister = () => {
+    const mediaCondition = 'only screen and (max-width: 720px)';
+
+    enquireScreen((mobile) => {
+      this.setState({
+        isMobile: mobile,
+      });
+    }, mediaCondition);
+  };
+
+  showDialog = () => {
+    this.setState({
+      visible: true,
+    });
+  };
+
+  hideDialog = () => {
+    this.setState({
+      visible: false,
+    });
+  };
+
+  render() {
+    const { isMobile } = this.state;
+    const init = this.field.init;
+    const dialogStyle = {
+      width: isMobile ? '320px' : '640px',
+      height: isMobile ? 'auto' : '340px',
+    };
+    const formItemLayout = {
+      labelCol: {
+        fixedSpan: 6,
+      },
+      wrapperCol: {
+        span: 14,
+      },
+    };
+
+    return (
+      <span>
+        <Dialog
+          className="confirm-dialog"
+          style={{ ...dialogStyle }}
+          autoFocus={false}
+          footerAlign="center"
+          title="增加"
+          onOk={this.handleSubmit}
+          onCancel={this.hideDialog}
+          onClose={this.hideDialog}
+          {...this.props}
+          visible={this.state.visible}
+        >
+          <Form direction="ver" field={this.field}>
+            <FormItem label="工厂：" {...formItemLayout}>
+              <Input
+                {...init('factory', {
+                  rules: [{ required: true, message: '必填选项' }],
+                })}
+              />
+            </FormItem>
+
+            <FormItem label="生产线：" {...formItemLayout}>
+              <Input
+                {...init('productLine', {
+                  rules: [{ required: true, message: '必填选项' }],
+                })}
+              />
+            </FormItem>
+
+            <FormItem label="工位号：" {...formItemLayout}>
+              <Input
+                {...init('stationCode', {
+                  rules: [{ required: true, message: '必填选项' }],
+                })}
+              />
+            </FormItem>
+
+            <FormItem label="工位顺序：" {...formItemLayout}>
+              <Input
+                {...init('stationOrder', {
+                  rules: [{ required: true, message: '必填选项' }],
+                })}
+              />
+            </FormItem>
+            <FormItem label="工位总数：" {...formItemLayout}>
+              <Input
+                {...init('stationSum', {
+                  rules: [{ required: true, message: '必填选项' }],
+                })}
+              />
+            </FormItem>
+            <FormItem label="工位MAC：" {...formItemLayout}>
+              <Input
+                {...init('stationMac', {
+                  rules: [{ required: true, message: '必填选项' }],
+                })}
+              />
+            </FormItem>
+          </Form>
+        </Dialog>
+        <Button  onClick={this.showDialog} style={styles.batchBtn}>
+          <Icon type="add" />增加
+        </Button>
+      </span>
+    );
+  }
+}
+
+const styles = {
+  batchBtn: {
+    marginRight: '10px',
+  },
+};

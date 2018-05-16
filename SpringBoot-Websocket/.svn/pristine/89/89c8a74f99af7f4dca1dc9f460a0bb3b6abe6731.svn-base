@@ -1,0 +1,21 @@
+package com.atoz.vfs.controller;
+
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+
+/**
+ * websocket测试类
+ * @author che
+ *
+ */
+@RestController
+public class WebsocketController {
+	@MessageMapping("/hello")
+    @SendTo("/topic/vin")
+    public String greeting(@RequestBody Object vinCode) throws Exception {
+
+        return vinCode.toString();
+    }
+}

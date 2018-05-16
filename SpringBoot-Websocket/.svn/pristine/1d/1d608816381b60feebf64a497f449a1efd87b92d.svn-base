@@ -1,0 +1,6 @@
+# 开启debug等级日志
+debug: true
+
+# websocket地址
+socket:
+  url: /ws

@@ -1,0 +1,152 @@
+import React, { Component } from 'react';
+import axios from 'axios';
+import { Dialog, Button, Form, Input, Field } from '@icedesign/base';
+
+const FormItem = Form.Item;
+
+export default class EditDialog extends Component {
+  static displayName = 'EditDialog';
+
+  static defaultProps = {};
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      visible: false,
+      dataIndex: null,
+    };
+    this.field = new Field(this);
+  }
+
+  handleSubmit = () => {
+    this.field.validate((errors, values) => {
+      if (errors) {
+        console.log('Errors in form!!!');
+        return;
+      }
+
+      const { dataIndex } = this.state;
+      var that = this;
+
+      axios.put('./station', values)
+      .then(function (response) {
+        response.data.message == "SUCCESS" && that.props.getFormValues(dataIndex, values); // 更新后刷新表格
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+
+      this.setState({
+        visible: false,
+      });
+    });
+  };
+
+  onOpen = (index, record) => {
+    this.field.setValues({ ...record });
+    this.setState({
+      visible: true,
+      dataIndex: index,
+    });
+  };
+
+  onClose = () => {
+    this.setState({
+      visible: false,
+    });
+  };
+
+  render() {
+    const init = this.field.init;
+    const { index, record } = this.props;
+    const formItemLayout = {
+      labelCol: {
+        fixedSpan: 6,
+      },
+      wrapperCol: {
+        span: 14,
+      },
+    };
+
+    return (
+      <div style={styles.editDialog}>
+        <Button
+          size="small"
+          type="primary"
+          onClick={() => this.onOpen(index, record)}
+        >
+          编辑
+        </Button>
+        <Dialog
+          style={{ width: 640 }}
+          visible={this.state.visible}
+          onOk={this.handleSubmit}
+          closable="esc,mask,close"
+          onCancel={this.onClose}
+          onClose={this.onClose}
+          title="编辑"
+        >
+          <Form direction="ver" field={this.field}>
+            <FormItem>
+              <Input  htmlType="hidden"
+                {...init('stationId')}
+              />
+            </FormItem>
+            <FormItem label="工厂：" {...formItemLayout}>
+              <Input
+                {...init('factory', {
+                  rules: [{ required: true, message: '必填选项' }],
+                })}
+              />
+            </FormItem>
+
+            <FormItem label="产线：" {...formItemLayout}>
+              <Input
+                {...init('productLine', {
+                  rules: [{ required: true, message: '必填选项' }],
+                })}
+              />
+            </FormItem>
+
+            <FormItem label="工位号：" {...formItemLayout}>
+              <Input
+                {...init('stationCode', {
+                  rules: [{ required: true, message: '必填选项' }],
+                })}
+              />
+            </FormItem>
+
+            <FormItem label="工位顺序：" {...formItemLayout}>
+              <Input
+                {...init('stationOrder', {
+                  rules: [{ required: true, message: '必填选项' }],
+                })}
+              />
+            </FormItem>
+            <FormItem label="工位总数：" {...formItemLayout}>
+              <Input
+                {...init('stationSum', {
+                  rules: [{ required: true, message: '必填选项' }],
+                })}
+              />
+            </FormItem>
+            <FormItem label="工位MAC：" {...formItemLayout}>
+              <Input
+                {...init('stationMac', {
+                  rules: [{ required: true, message: '必填选项' }],
+                })}
+              />
+            </FormItem>
+          </Form>
+        </Dialog>
+      </div>
+    );
+  }
+}
+
+const styles = {
+  editDialog: {
+    display: 'inline-block',
+    marginRight: '5px',
+  },
+};

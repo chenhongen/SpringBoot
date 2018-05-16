@@ -1,0 +1,32 @@
+package com.atoz.vfs.annotation;
+
+import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Inherited;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
+import com.atoz.vfs.common.Constants.SystemLogType;
+
+/**
+ * 自定义日志注解
+ *    
+ * 创建人：che
+ * 创建时间：2018年1月19日 下午2:24:09
+ * 
+ * @Retention 描述注解的生命周期
+ * @Target 描述注解的使用范围
+ * @Inherited 允许继承
+ * @Documented 注解归档
+ */
+@Retention(RetentionPolicy.RUNTIME)
+@Target({ElementType.METHOD})
+@Inherited
+@Documented
+public @interface LogAnnotation {
+	String logModule() default "";
+	String logFunction() default "";
+	SystemLogType logType() default SystemLogType.SYS;
+    String logContent() default "";
+}

@@ -1,0 +1,70 @@
+package com.atoz.vfs.pojo;
+
+public class PageCond {
+	private int begin; // 分页查询条件，返回记录的起始记录号
+	private int length = 10; // 分页查询条件，返回记录数长度
+	private boolean isCount; //	分页查询条件，是否统计总行数
+	private int count; // 分页状态信息，总记录数
+	private int totalPage; // 分页状态信息，总页数
+	private int currentPage; // 分页状态信息，当前页号
+	private boolean isFirst; // 分页状态信息，是否首页
+	private boolean isLast; // 分页状态信息，是否尾页
+	private int size; // 分页状态信息，当前页记录数
+	
+	public int getBegin() {
+		return begin;
+	}
+	public void setBegin(int begin) {
+		this.begin = begin;
+	}
+	public int getLength() {
+		return length;
+	}
+	public void setLength(int length) {
+		this.length = length;
+	}
+	public boolean isCount() {
+		return isCount;
+	}
+	public void setCount(boolean isCount) {
+		this.isCount = isCount;
+	}
+	public int getCount() {
+		return count;
+	}
+	public void setCount(int count) {
+		this.count = count;
+	}
+	public int getTotalPage() {
+		return totalPage;
+	}
+	public void setTotalPage(int totalPage) {
+		this.totalPage = totalPage;
+	}
+	public int getCurrentPage() {
+		return currentPage;
+	}
+	public void setCurrentPage(int currentPage) {
+		this.currentPage = currentPage;
+	}
+	public boolean isFirst() {
+		return isFirst;
+	}
+	public void setFirst(boolean isFirst) {
+		this.isFirst = isFirst;
+	}
+	public boolean isLast() {
+		return isLast;
+	}
+	public void setLast(boolean isLast) {
+		this.isLast = isLast;
+	}
+	public int getSize() {
+		return size;
+	}
+	public void setSize(int size) {
+		this.size = size;
+	}
+	
+	
+}

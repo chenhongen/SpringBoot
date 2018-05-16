@@ -1,0 +1,69 @@
+package com.atoz.vfs.service.impl;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.atoz.vfs.dao.VmaterialMapper;
+import com.atoz.vfs.pojo.CriteriaEntity;
+import com.atoz.vfs.pojo.po.Vmaterial;
+import com.atoz.vfs.service.IVmaterialService;
+/**
+ * 物料模块实现
+ * @author che
+ *
+ */
+@Service
+public class VmaterialServiceImpl implements IVmaterialService {
+	@Autowired
+	private VmaterialMapper mapper;
+
+	@Override
+	public Vmaterial selectEntityByKey(String key) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Vmaterial> listByTemplate(Vmaterial object) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Vmaterial> listByCriteria(CriteriaEntity<Vmaterial> criteria) {
+		return mapper.selectByExample(criteria);
+	}
+
+	@Override
+	public int saveEntity(Vmaterial entity) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int deleteEntityByKey(Long key) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int deleteEntityByKeys(String keys) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int insertEntity(Vmaterial entity) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int updateEntity(Vmaterial entity) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+}

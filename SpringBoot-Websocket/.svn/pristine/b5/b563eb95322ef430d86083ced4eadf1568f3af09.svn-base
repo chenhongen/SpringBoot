@@ -1,0 +1,19 @@
+import React, { Component } from 'react';
+import SelectableTable from './components/SelectableTable';
+
+export default class ProductLineStation extends Component {
+  static displayName = 'ProductLineStation';
+
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
+
+  render() {
+    return (
+      <div className="product-line-station-page">
+        <SelectableTable />
+      </div>
+    );
+  }
+}

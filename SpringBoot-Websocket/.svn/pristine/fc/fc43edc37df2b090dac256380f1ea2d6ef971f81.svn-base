@@ -1,0 +1,28 @@
+package com.atoz.vfs.service;
+
+import java.util.List;
+
+import com.atoz.vfs.pojo.po.Vscan;
+import com.atoz.vfs.pojo.po.Vworkshopstation;
+import com.atoz.vfs.service.IService;
+
+/**
+ * 扫码模块接口
+ * @author che
+ *
+ */
+public interface IVscanService extends IService<Vscan> {
+	/**
+	 * 查询实体（一般用于唯一属性）
+	 * @param 
+	 * @return
+	 */
+	public Vscan selectByTemp(Vscan role);
+	
+	/**
+	 * 扫码后查询对应产线应推送工位
+	 * @param mac
+	 * @return
+	 */
+	public List<Vworkshopstation> selectStationByScan(String mac);
+}

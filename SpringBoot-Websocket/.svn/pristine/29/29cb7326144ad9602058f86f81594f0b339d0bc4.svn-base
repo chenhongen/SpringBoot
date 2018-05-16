@@ -1,0 +1,13 @@
+package com.atoz.vfs.service;
+
+import com.atoz.vfs.pojo.po.Vving;
+import com.atoz.vfs.service.IService;
+
+public interface IVvingService extends IService<Vving> {
+	/**
+	 * 根据CapRole对象查询
+	 * @param role
+	 * @return
+	 */
+	public Vving selectByTemp(Vving role);
+}

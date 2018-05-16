@@ -1,0 +1,76 @@
+package com.atoz.vfs.service.impl;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.atoz.vfs.dao.VworkshopstationMapper;
+import com.atoz.vfs.pojo.CriteriaEntity;
+import com.atoz.vfs.pojo.po.Vworkshopstation;
+import com.atoz.vfs.service.IVstationService;
+
+/**
+ * 工位模块实现
+ * @author che
+ *
+ */
+@Service
+public class VstationServiceImpl implements IVstationService {
+	@Autowired
+	private VworkshopstationMapper mapper;
+
+	@Override
+	public Vworkshopstation selectEntityByKey(String key) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Vworkshopstation> listByTemplate(Vworkshopstation object) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Vworkshopstation> listByCriteria(CriteriaEntity<Vworkshopstation> criteria) {
+		return mapper.selectByExample(criteria);
+	}
+
+	@Override
+	public int saveEntity(Vworkshopstation entity) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int deleteEntityByKey(Long key) {
+		return mapper.deleteByPrimaryKey(key);
+	}
+
+	@Override
+	public int insertEntity(Vworkshopstation entity) {
+		entity.setActiveFlag((short) 1);
+//		Date date = new Date();
+//		entity.setCreateDate(date);
+//		entity.setUpdateDate(date);
+		
+		return mapper.insertSelective(entity);
+	}
+
+	@Override
+	public int updateEntity(Vworkshopstation entity) {
+		return mapper.updateByPrimaryKeySelective(entity);
+	}
+
+	public Vworkshopstation selectByTemp(Vworkshopstation station) {
+		return mapper.selectByTemp(station);
+	}
+
+	@Override
+	public int deleteEntityByKeys(String keys) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+}

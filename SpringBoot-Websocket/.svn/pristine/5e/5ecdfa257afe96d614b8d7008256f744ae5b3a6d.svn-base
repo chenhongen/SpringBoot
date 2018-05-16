@@ -1,0 +1,123 @@
+package com.atoz.vfs.pojo.vo;
+
+import com.atoz.vfs.pojo.CriteriaEntity;
+
+import tk.mybatis.mapper.util.StringUtil;
+
+public class PageVO<T> implements java.io.Serializable {
+	private static final long serialVersionUID = 9197090398080904039L;
+	
+	private int pageIndex = 1;
+
+	private int pageSize = 10;
+
+	//private String sore = null;
+
+	//private String order = "asc";
+	
+	private Long total;
+
+	private CriteriaEntity<T> criteria;
+	
+	//private List<T> results;
+
+	//private List<T> footer;
+	
+	private String sortField;
+	
+	private String sortOrder;
+	
+	private String orderBy;
+
+	public int getPageIndex() {
+		return pageIndex;
+	}
+
+	public void setPageIndex(int pageIndex) {
+		this.pageIndex = pageIndex;
+	}
+
+	public int getPageSize() {
+		return pageSize;
+	}
+
+	public void setPageSize(int pageSize) {
+		this.pageSize = pageSize;
+	}
+
+//	public String getSore() {
+//		return sore;
+//	}
+//
+//	public void setSore(String sore) {
+//		this.sore = sore;
+//	}
+//
+//	public String getOrder() {
+//		return order;
+//	}
+//
+//	public void setOrder(String order) {
+//		this.order = order;
+//	}
+
+	public Long getTotal() {
+		return total;
+	}
+
+	public void setTotal(Long total) {
+		this.total = total;
+	}
+
+//	public List<T> getResults() {
+//		return results;
+//	}
+//
+//	public void setResults(List<T> results) {
+//		this.results = results;
+//	}
+//
+//	public List<T> getFooter() {
+//		return footer;
+//	}
+//
+//	public void setFooter(List<T> footer) {
+//		this.footer = footer;
+//	}
+
+	public CriteriaEntity<T> getCriteria() {
+		return criteria;
+	}
+
+	public void setCriteria(CriteriaEntity<T> criteria) {
+		this.criteria = criteria;
+	}
+
+	public String getSortField() {
+		return sortField;
+	}
+
+	// 驼峰转下划线
+	public void setSortField(String sortField) {
+		this.sortField = "".equals(sortField)?"":StringUtil.camelhumpToUnderline(sortField);
+	}
+
+	public String getSortOrder() {
+		return sortOrder;
+	}
+
+	public void setSortOrder(String sortOrder) {
+		this.sortOrder = sortOrder;
+	}
+	
+	// 排序组装
+	public String getOrderBy() {
+		if(!"".equals(sortField) && !"".equals(sortOrder))
+			this.orderBy = this.sortField + " " + this.sortOrder;
+		return orderBy;
+	}
+
+	public void setOrderBy(String orderBy) {
+		this.orderBy = orderBy;
+	}
+}

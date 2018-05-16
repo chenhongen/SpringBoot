@@ -1,0 +1,22 @@
+package com.atoz.vfs.controller;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.atoz.vfs.util.NetworkUtil;
+
+@Controller
+public class IndexController {
+	@RequestMapping("/")
+	public String getIP(HttpServletRequest request) {
+		request.getSession().setAttribute("REMOTE_IP", NetworkUtil.getIpAddr(request));
+		return "redirect:http://localhost:4444";
+	}
+	
+	@RequestMapping("/index")
+	public String index() {
+		return "index";
+	}
+}

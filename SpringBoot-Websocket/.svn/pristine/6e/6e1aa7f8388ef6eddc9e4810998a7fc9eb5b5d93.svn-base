@@ -1,0 +1,30 @@
+import React, { Component } from 'react';
+
+export default class Video extends Component {
+  static displayName = 'Video';
+
+  // 结束时切换播放
+  onEnded = () =>  {
+    // TODO:播放后切换类别设定
+    this.props.endfunc(2);
+  }
+
+  // 解构赋值...需要放在最后，endfunc作为属性传递时直接传给vedio将出现警告
+  render() {
+    const { sources, endfunc, ...others  } = this.props;
+    
+    if (!sources || !sources.length) {
+      return null;
+    }
+
+    return (
+      <video ref={ node => this.videoNode = node }
+        controls {...others} onPlay={this.onEnded}>
+        <track kind="captions" />
+        {sources.map((video, index) => {
+          return <source {...video} key={index} />;
+        })}
+      </video>
+    );
+  }
+}

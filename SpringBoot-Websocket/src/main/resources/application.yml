@@ -1,0 +1,29 @@
+
+server: 
+  port: 8083
+  tomcat:
+    uri-encoding: utf-8
+#  servlet:
+#    context-path: /che
+
+spring:
+  # 多环境配置
+  profiles:
+    active: dev
+  mvc:
+    throw-exception-if-no-handler-found: true
+#    view:
+#      prefix: /WEB-INF/jsp/
+#      suffix: .jsp
+    static-path-pattern: /**
+  http:
+    encoding:
+      charset: utf-8
+      force: true
+      enabled: true
+      
+#  devtools:
+#    restart:
+#      enabled: true
+      #classpath目录下的WEB-INF文件夹内容修改不重启
+      #exclude: WEB-INF/**

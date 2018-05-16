@@ -1,0 +1,3 @@
+import WorkshopStation from './WorkshopStation';
+
+export default WorkshopStation;

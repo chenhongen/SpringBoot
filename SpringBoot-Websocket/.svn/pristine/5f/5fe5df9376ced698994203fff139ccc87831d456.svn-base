@@ -1,0 +1,19 @@
+package com.atoz.vfs.service;
+
+import com.atoz.vfs.pojo.po.Vworkshopstation;
+import com.atoz.vfs.service.IService;
+
+/**
+ * 工位模块接口
+ * @author che
+ *
+ */
+public interface IVstationService extends IService<Vworkshopstation> {
+	/**
+	 * 查询实体（一般用于唯一属性）
+	 * @param station
+	 * @return
+	 */
+	Vworkshopstation selectByTemp(Vworkshopstation station);
+	
+}

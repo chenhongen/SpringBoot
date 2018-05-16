@@ -1,0 +1,13 @@
+package com.atoz.vfs.service;
+
+import com.atoz.vfs.pojo.po.Vscan;
+import com.atoz.vfs.service.IService;
+
+public interface IVscanService extends IService<Vscan> {
+	/**
+	 * 
+	 * @param 
+	 * @return
+	 */
+	public Vscan selectByTemp(Vscan role);
+}

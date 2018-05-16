@@ -1,0 +1,49 @@
+import React, { Component } from 'react';
+import Play from './Play';
+import MobxData from './../../../../components/mac';
+import { when, autorun } from 'mobx';
+import { Loading } from "@icedesign/base";
+
+/// 功能：查询MAC；Loading
+export default class SimpleVideoPlayer extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      mac: '',
+      visible: true
+    };
+
+    when(
+        // 一旦...
+        () => Boolean(MobxData.MOBX_DATA.mac) == true,
+        // ... 然后
+        () => this.updateState()
+    );
+
+    // autorun(()=>{
+    //     console.log(`Name changed: `, MobxData.MOBX_DATA.mac);
+    //     if(Boolean(MobxData.MOBX_DATA.mac))
+    //       this.updateState()
+    // });
+  }
+  componentDidMount() {
+
+  }
+
+  updateState() {
+    this.setState({
+      mac: MobxData.MOBX_DATA.mac,
+      visible: false
+    });
+  }
+
+  render() {
+    return (
+      <div>
+        <Loading visible={this.state.visible} shape="fusion-reactor" color="#eee" style={{width:'100%', marginTop: '40px'}}>
+          {!this.state.visible && (<Play mac={this.state.mac}/>)}
+        </Loading>
+      </div>
+    );
+  }
+}

@@ -1,0 +1,32 @@
+package com.atoz.vfs.service;
+
+import java.util.List;
+
+import com.atoz.vfs.pojo.CriteriaEntity;
+
+/**
+ * 通用接口
+ * @author che
+ * @param <T>
+ * @param <E>
+ *
+ */
+public interface IService<T> {
+	T selectEntityByKey(String key);
+	
+	List<T> listByTemplate(T object);
+
+    List<T> listByCriteria(CriteriaEntity<T> criteria);
+    
+    //PageInfo<T> selectByPage(T entity, int start, int length);
+	
+	int saveEntity(T entity);
+
+    int deleteEntityByKey(Long key);
+    
+    int deleteEntityByKeys(String keys);
+    
+    int insertEntity(T entity);
+
+    int updateEntity(T entity);
+}

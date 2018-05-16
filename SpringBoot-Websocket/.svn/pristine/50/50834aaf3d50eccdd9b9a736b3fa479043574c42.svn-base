@@ -1,0 +1,45 @@
+import PropTypes from 'prop-types';
+import React, { Component } from 'react';
+
+
+// socket.onopen = function() {
+//   console.log('open');
+// };
+// socket.onmessage = function(e) {
+//   console.log('message', e.data);
+// };
+// socket.onclose = function() {
+//   console.log('close');
+// };
+
+
+// 全局
+//const StompContext = React.createContext(stompClient);
+//console.log(StompContext);
+//export default StompContext
+
+
+var SockJS = require('sockjs-client'), Stomp = require('stompjs');
+
+export default (()=>{
+  let stompClient = null;
+
+  var socket = new SockJS('http://localhost:8081/vfs/ws', null, {});
+  //console.log(socket);
+  return {
+    getStompClient() {
+      if(!stompClient) {
+        var stompClient = Stomp.over(socket);
+        //stompClient.connect({}, function (frame) {
+            //setConnected(true);
+            //console.log('Connected: ' + frame);
+            //stompClient.subscribe('/topic/greetings', function (greeting) {
+                //showGreeting(JSON.parse(greeting.body).vinCode);
+            //});
+        //});
+      }
+      return stompClient;
+    }
+  }
+
+})();

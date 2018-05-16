@@ -1,0 +1,6 @@
+# 日志输出文件
+logging: 
+  file: e:/emes/emes.log
+  level:
+    #root: info
+    com.mes: debug

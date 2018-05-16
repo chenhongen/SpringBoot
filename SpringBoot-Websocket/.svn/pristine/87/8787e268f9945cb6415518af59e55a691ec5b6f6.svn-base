@@ -1,0 +1,109 @@
+import React, { Component } from 'react';
+import ReactDOM from 'react-dom'
+import axios from 'axios';
+import { Input, Button, Field, Switch } from '@icedesign/base';
+import IceContainer from '@icedesign/container';
+import { Balloon } from '@icedesign/base';
+import IceTitle from '@icedesign/title';
+import CustomIcon from '../../components/CustomIcon';
+import './Scan.scss';
+import SocketClient from '../../components/socketConnect';
+import MobxData from '../../components/mac';
+
+export default class Scan extends Component {
+  static displayName = 'Scan';
+
+  field = new Field(this, {
+    onChange: (name, value) => {
+      // TODA：触发推送事件
+      if( value.length == 16) {
+        console.log(name + " - " + value);
+
+      }
+
+      var params = new URLSearchParams();
+      params.append('vinCode', value);
+      params.append('mac', MobxData.MOBX_DATA.mac);
+      axios.post('/scan', params)
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+    },
+    onFocus: () => {
+      console.log("focus");
+    }
+  });
+
+  // TODA：重新推送事件
+  onRePush = () =>  {
+    console.log("onRePush");
+  }
+
+  // TODA：清除队列事件
+  onClearQueue() {
+    console.log("onClearQueue");
+  }
+
+  onSwitchChange = (checked) => {
+    this.setState({
+      inputStatus: checked
+    });
+    if(!checked) {
+      //this.refs.scanInput.refs.input.focus(); // error
+
+      // this.refs.scanInput.focus();  // error
+
+      //document.querySelector("#scanInput").focus();
+      //ReactDOM.findDOMNode(this.refs.scanInput.refs.input).focus();
+      //<input type="text" data-meta="Field" id="scanInput" placeholder="扫码推送" value="" height="100%">
+
+      //this._input.focus(); // input可行，Input不行
+      setTimeout(() => {
+        this.refs.scanInput.getInputNode().focus();
+      });
+    }
+  }
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      inputStatus: false
+    };
+  }
+
+  render() {
+    const { init, setValue, reset } = this.field;
+
+    return (
+      <IceContainer style={{ width: '300px', margin: '10% auto' }}>
+        <IceTitle style={{ marginTop: '8px' , display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
+          可视化文件推送 &nbsp;
+          <Balloon.Tooltip trigger={<span><Switch checkedChildren="开" onChange={this.onSwitchChange} unCheckedChildren="关" /></span>} align="r" text="扫码/节拍推送切换"/>
+        </IceTitle>
+
+        <Input {...init("scanInput")} autoFocus size="large" disabled={this.state.inputStatus} style={{ width: '100%' }} placeholder="扫码推送"/>
+        <br />
+        <br />
+
+        <div style={{ textAlign: 'center' }} >
+          <Button type="primary" onClick={this.onRePush}>
+            <CustomIcon size="large" type="zhongzhi"
+            style={{ verticalAlign: 'super' }}/><span style={{ verticalAlign: 'top' }}>重新推送</span>
+          </Button>
+          <span >&emsp;</span>
+          <Button
+            type="primary"
+            onClick={() => setValue("scanInput", "set me by click")}
+          >
+            <CustomIcon size="large" type="shanchu"
+            style={{ verticalAlign: 'super' }}/><span style={{ verticalAlign: 'top' }}>清除队列</span>
+          </Button>
+        </div>
+      </IceContainer>
+
+    );
+  }
+}

@@ -1,0 +1,24 @@
+
+define(function(require) {
+	'use strict';
+
+	var SockJS = require('sockjs-client'), Stomp = require('stompjs'), Const = require('../const');
+
+	//require('stomp-websocket');
+	return {
+		register: register
+	};
+
+	function register(name, registrations) {
+    // TODO:地址需要换成常量
+		var socket = SockJS(Const.default.SERVER_URL+'/ws', null, {});
+		var stompClient = Stomp.over(socket);
+    console.log(registrations)
+		stompClient.connect({name: name}, function(frame) {
+			registrations.forEach(function (registration) {
+			  stompClient.subscribe(registration.route, registration.callback);
+			});
+		});
+	}
+
+});

@@ -1,0 +1,12 @@
+package com.atoz.vfs.service;
+
+import com.atoz.vfs.pojo.po.Vfile;
+
+/**
+ * 文件模块接口
+ * @author che
+ *
+ */
+public interface IVfileService extends IService<Vfile> {
+
+}

@@ -1,0 +1,209 @@
+package com.atoz.vfs.pojo;
+
+import java.io.Serializable;
+
+import com.atoz.vfs.common.Constants;
+
+import tk.mybatis.mapper.util.StringUtil;
+
+public class Criterion<T> implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -279488635091912196L;
+
+	private String property;
+	
+    private Object value;
+    
+    private String condition;
+    
+    private Object minValue;
+    
+    private Object maxValue;
+    
+    private String likeRule;
+    
+    private boolean equal = false;
+    
+    private boolean like = false;
+    
+	private boolean ifIn = false;
+	
+	private boolean ifNotIn = false;
+    
+    private boolean between = false;
+    
+    private boolean ifNull = false;
+    
+    private boolean ifNotNull = false;
+    
+	private boolean likeAll = true;
+    
+    private boolean likeRight = false;
+    
+    private boolean likeLeft = false;
+    
+    public Criterion(){
+    	
+    }
+    
+    public Criterion(String property, String condition, Object value){
+    	setProperty(property);
+    	setCondition(condition);
+    	setValue(value);
+    }
+
+	public Object getValue() {
+		return value;
+	}
+
+	public void setValue(Object value) {
+		this.value = value;
+	}
+
+	public String getCondition() {
+		return condition;
+	}
+
+	public void setCondition(String condition) {
+		if(Constants.EQUAL.equals(condition)){
+			this.setEqual(true);
+		}else if(Constants.LIKE.equals(condition)){
+			this.like = true;
+		}else if(Constants.IF_IN.equals(condition)){
+			this.ifIn = true;
+		}else if(Constants.IF_NOTIN.equals(condition)){
+			this.ifNotIn = true;
+		}else if(Constants.BETWEEN.equals(condition)){
+			this.between = true;
+		}else if(Constants.IF_NULL.equals(condition)){
+			this.ifNull = true;
+		}else if(Constants.IF_NOTNULL.equals(condition)){
+			this.ifNotNull = true;
+		}
+		
+		this.condition = condition;
+	}
+
+	public boolean isIfNotIn() {
+		return ifNotIn;
+	}
+
+	public void setIfNotIn(boolean ifNotIn) {
+		this.ifNotIn = ifNotIn;
+	}
+
+	public Object getMinValue() {
+		return minValue;
+	}
+
+	public void setMinValue(Object minValue) {
+		this.minValue = minValue;
+	}
+
+	public Object getMaxValue() {
+		return maxValue;
+	}
+
+	public void setMaxValue(Object maxValue) {
+		this.maxValue = maxValue;
+	}
+
+	public String getLikeRule() {
+		return likeRule;
+	}
+
+	public void setLikeRule(String likeRule) {
+		if(Constants.LIKE_ALL.equals(likeRule)){
+			this.likeAll = true;
+		}else if(Constants.LIKE_RIGHT.equals(likeRule)){
+			this.likeRight = true;
+		}else if(Constants.LIKE_LEFT.equals(likeRule)){
+			this.likeLeft = true;
+		}else{
+			this.likeAll = true;
+		}
+		this.likeRule = likeRule;
+	}
+
+	public String getProperty() {
+		return property;
+	}
+
+	// 前台驼峰转SQL下划线
+	public void setProperty(String property) {
+		this.property = StringUtil.camelhumpToUnderline(property);
+	}
+
+	public boolean isEqual() {
+		return equal;
+	}
+
+	public void setEqual(boolean equal) {
+		this.equal = equal;
+	}
+	 public boolean isLike() {
+		return like;
+	}
+
+	public void setLike(boolean like) {
+		this.like = like;
+	}
+
+	public boolean isIfIn() {
+		return ifIn;
+	}
+
+	public void setIn(boolean ifIn) {
+		this.ifIn = ifIn;
+	}
+
+	public boolean isBetween() {
+		return between;
+	}
+
+	public void setBetween(boolean between) {
+		this.between = between;
+	}
+
+	public boolean isIfNull() {
+		return ifNull;
+	}
+
+	public void setIfNull(boolean ifNull) {
+		this.ifNull = ifNull;
+	}
+
+	public boolean isIfNotNull() {
+		return ifNotNull;
+	}
+
+	public void setIfNotNull(boolean ifNotNull) {
+		this.ifNotNull = ifNotNull;
+	}
+	
+    public boolean isLikeAll() {
+		return likeAll;
+	}
+
+	public void setLikeAll(boolean likeAll) {
+		this.likeAll = likeAll;
+	}
+
+	public boolean isLikeRight() {
+		return likeRight;
+	}
+
+	public void setLikeRight(boolean likeRight) {
+		this.likeRight = likeRight;
+	}
+
+	public boolean isLikeLeft() {
+		return likeLeft;
+	}
+
+	public void setLikeLeft(boolean likeLeft) {
+		this.likeLeft = likeLeft;
+	}
+}

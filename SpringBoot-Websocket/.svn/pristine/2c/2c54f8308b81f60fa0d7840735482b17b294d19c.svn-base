@@ -1,0 +1,84 @@
+package com.atoz.vfs.service.impl;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.atoz.vfs.dao.VscanMapper;
+import com.atoz.vfs.pojo.CriteriaEntity;
+import com.atoz.vfs.pojo.po.Vscan;
+import com.atoz.vfs.pojo.po.Vworkshopstation;
+import com.atoz.vfs.service.IVscanService;
+
+/**
+ * 扫码模块实现
+ * @author che
+ *
+ */
+@Service
+public class VscanServiceImpl implements IVscanService {
+	@Autowired
+	private VscanMapper mapper;
+
+	@Override
+	public Vscan selectEntityByKey(String key) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Vscan> listByTemplate(Vscan object) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Vscan> listByCriteria(CriteriaEntity<Vscan> criteria) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int saveEntity(Vscan entity) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int deleteEntityByKey(Long key) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	@Transactional
+	public int insertEntity(Vscan entity) {
+		return mapper.insertSelective(entity);
+	}
+
+	@Override
+	public int updateEntity(Vscan entity) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public Vscan selectByTemp(Vscan role) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int deleteEntityByKeys(String keys) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public List<Vworkshopstation> selectStationByScan(String mac) {
+		return mapper.selectStationByScan(mac);
+	}
+
+}

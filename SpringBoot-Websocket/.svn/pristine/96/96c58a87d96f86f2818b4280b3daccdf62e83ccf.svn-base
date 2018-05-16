@@ -1,0 +1,83 @@
+package com.atoz.vfs.common;
+
+public class Constants {
+	
+	//执行成功
+	public static final String SUCCESS = "SUCCESS";
+	//执行失败
+	public static final String FAIL = "FAIL";
+	//已存在
+	public static final String EXISTS = "EXISTS";
+	//不存在
+	public static final String NON_EXISTS = "NON-EXISTS";
+	
+	//Criteria的condition
+	public static final String EQUAL = "=";
+	public static final String LIKE = "like";
+	public static final String IF_IN = "in";
+	public static final String IF_NOTIN = "notIn";
+	public static final String BETWEEN = "between";
+	public static final String IF_NULL = "null";
+	public static final String IF_NOTNULL = "notnull";
+	
+	//Criteria的likeRule
+	public static final String LIKE_ALL = "all";
+	public static final String LIKE_RIGHT = "right";
+	public static final String LIKE_LEFT = "left";
+	
+	//树的节点类型
+	public static final String NODE_TYPE_ROOT = "root";
+	//应用功能树默认根节点
+	public static final String APP_TREE_ROOT = "应用功能树";
+	
+	//资源类型
+	public static final String RES_TYPE_APP = "app";
+	public static final String RES_TYPE_FUNC = "func";
+	public static final String RES_TYPE_GROUP = "group";
+	public static final String RES_TYPE_SUB_GROUP = "subgroup";
+	public static final String RES_TYPE_MENUGROUP = "menugroup";
+	public static final String RES_TYPE_MENU = "menu";
+	//资源链接
+	public static final String RES_URL = "func_url";
+	public static final String RES_PARAM = "func_param";
+	public static final String RES_IS_CHECK = "func_is_check";
+	
+	public static final String ROLE_PARTY_TYPE_ID = "role";
+	
+	public static final String EMP_PARTY_TYPE_ID = "emp";
+	
+	//任务状态
+	public static final String TASK_STATUS_RECEIVING = "receiving";
+	public static final String TASK_STATUS_EXECUTING = "executing";
+	public static final String TASK_STATUS_COMPLETED = "completed";
+	
+	// icon
+	public static final String ICON_APPLICATION_HOME = "icon-application-home";
+	public static final String ICON_APPLICATION = "icon-application";
+	public static final String ICON_MENU = "icon-menu";
+	public static final String ICON_MENU_ROOT = "icon-menu-root";
+	
+	// redis
+	public static final String REDIS_KEY_DICTCACHE = "dictCache"; // 数据字典
+	
+	// 系统日志操作类型
+	public enum SystemLogType {
+	    SYS,VIEW,INSERT,UPDATE,DELETE,LOGIN,LOGOUT,IMPORT,EXPORT
+	}
+	
+	/** * 响应码枚举，参考HTTP状态码的语义 */ 
+	public enum ResultCode { 
+		SUCCESS(200),//成功 
+		FAIL(400),//失败 
+		UNAUTHORIZED(401),//未认证（签名错误） 
+		NOT_FOUND(404),//接口不存在 
+		INTERNAL_SERVER_ERROR(500);//服务器内部错误 
+		public int code; 
+		ResultCode(int code) { 
+			this.code = code; 
+		}
+	}
+	
+	// 视频文件格式
+	public static final String VIDEO_TYPE = "video/mp4";
+}

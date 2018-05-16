@@ -1,0 +1,52 @@
+package com.atoz.vfs.controller;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.annotation.Resource;
+
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.atoz.vfs.pojo.po.Vmaterial;
+import com.atoz.vfs.pojo.vo.PageVO;
+import com.atoz.vfs.pojo.vo.ResultVO;
+import com.atoz.vfs.service.IVmaterialService;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+
+/**
+ * 物料清单管理
+ * @author che
+ *
+ */
+@RestController
+@RequestMapping("/material")
+public class VMaterialController {
+	
+	@Resource
+	private IVmaterialService vmaterialService;
+	
+	/**
+	 * 一览查询
+	 * @param dg
+	 * @return
+	 */
+	@RequestMapping("list")
+	public ResultVO listStationByCriteria(@RequestBody PageVO<Vmaterial> dg){
+		// 分页处理
+		Page<Vmaterial> page = PageHelper.startPage(dg.getPageIndex(), dg.getPageSize());
+		// 一览查询
+		List<Vmaterial> list = vmaterialService.listByCriteria(dg.getCriteria());
+		// 总数统计
+		Long total = page.getTotal();
+		
+		Map<String, Object> data = new HashMap<>();
+		data.put("list", list);
+		data.put("total", total);
+		return new ResultVO().ok(data);
+	}
+	
+}

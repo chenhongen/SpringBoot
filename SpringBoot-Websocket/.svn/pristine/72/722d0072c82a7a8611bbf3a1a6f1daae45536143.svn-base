@@ -1,0 +1,56 @@
+package com.atoz.vfs.pojo;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+
+public class CriteriaEntity<T>  implements Serializable{
+	
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -7849799102312511333L;
+	
+	private String orderByClause;
+
+	private boolean distinct;
+	
+	private ArrayList<Criterion<T>> criterion = new ArrayList<>();
+    
+    private ArrayList<OrCriterion<T>> orCriterion = new ArrayList<>();
+
+	public ArrayList<Criterion<T>> getCriterion() {
+		return criterion;
+	}
+
+	public void setCriterion(ArrayList<Criterion<T>> criterion) {
+		this.criterion = criterion;
+	}
+	
+	public CriteriaEntity (){
+	}
+
+	public String getOrderByClause() {
+		return orderByClause;
+	}
+
+	public void setOrderByClause(String orderByClause) {
+		this.orderByClause = orderByClause;
+	}
+
+	public boolean isDistinct() {
+		return distinct;
+	}
+
+	public void setDistinct(boolean distinct) {
+		this.distinct = distinct;
+	}
+
+	public ArrayList<OrCriterion<T>> getOrCriterion() {
+		return orCriterion;
+	}
+
+	public void setOrCriterion(ArrayList<OrCriterion<T>> orCriterion) {
+		this.orCriterion = orCriterion;
+	}
+
+}

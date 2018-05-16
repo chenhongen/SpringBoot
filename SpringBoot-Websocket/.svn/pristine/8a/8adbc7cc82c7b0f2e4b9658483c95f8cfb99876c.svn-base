@@ -1,0 +1,27 @@
+package com.atoz.vfs.pojo;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+
+public class OrCriterion<T> implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7246980608615539900L;
+
+	private ArrayList<Criterion<T>> criterion;
+	
+	public OrCriterion(){
+		super();
+		criterion = new ArrayList<>();
+	}
+
+	public ArrayList<Criterion<T>> getCriterion() {
+		return criterion;
+	}
+
+	public void setCriterion(ArrayList<Criterion<T>> criterion) {
+		this.criterion = criterion;
+	}
+
+}

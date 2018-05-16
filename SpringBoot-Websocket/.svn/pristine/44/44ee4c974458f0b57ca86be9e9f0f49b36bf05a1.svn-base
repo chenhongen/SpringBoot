@@ -1,0 +1,19 @@
+import React, { Component } from 'react';
+import SimpleVideoPlayer from './components/SimpleVideoPlayer';
+
+export default class Play extends Component {
+  static displayName = 'Play';
+
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
+
+  render() {
+    return (
+      <div className="play-page">
+        <SimpleVideoPlayer />
+      </div>
+    );
+  }
+}

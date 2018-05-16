@@ -1,0 +1,21 @@
+import React, { Component } from 'react';
+
+export default class Doc extends Component {
+  static displayName = 'Video';
+
+  // TODO:结束时切换播放
+  onEnded = () =>  {
+    console.log(this.videoNode.controls);
+  }
+
+  // wrap the player in a div with a `data-vjs-player` attribute
+  // so videojs won't create additional wrapper in the DOM
+  // see https://github.com/videojs/video.js/pull/3856
+  render() {
+    const { sources, ...others } = this.props;
+
+    return (
+      <span styles={{ color: '#eee' }}>other Component</span>
+    );
+  }
+}

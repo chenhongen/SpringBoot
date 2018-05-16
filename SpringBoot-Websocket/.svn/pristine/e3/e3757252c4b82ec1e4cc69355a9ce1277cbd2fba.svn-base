@@ -1,0 +1,202 @@
+import React, { Component } from 'react';
+import axios from 'axios';
+import { Table, Button, Icon, Pagination } from '@icedesign/base';
+import IceContainer from '@icedesign/container';
+import DataBinder from '@icedesign/data-binder';
+import FilterForm from './FilterForm';
+import FormDialog from './FormDialog';
+import EditDialog from './EditDialog';
+
+@DataBinder({
+  tableData: {
+    // 详细请求配置请参见 https://github.com/axios/axios
+    //baseURL: 'http://localhost:8081/',
+    url: './station/list',
+    responseFormatter: (responseHandler, res, originResponse) => {
+      // 拿到接口返回的 res 数据，做一些格式转换处理，使其符合 DataBinder 的要求
+      // 最后再按照顺序丢到 responseHandler 方法里继续执行
+      if(res.data.list == null)
+        res.data.list = [];
+      res = {
+        status: res.message,
+        //success: res.code === "200" ? true : false,
+        //message: res.message,
+        data: res.data
+      };
+      responseHandler(res, originResponse);
+    },
+    method: 'post',
+    data: {},
+    defaultBindingData: {
+      list: [],
+      total: 100,
+      pageSize: 2,
+    },
+  },
+})
+
+export default class SelectableTable extends Component {
+  static displayName = 'SelectableTable';
+
+  static propTypes = {};
+
+  static defaultProps = {};
+
+  constructor(props) {
+    super(props);
+
+    // 请求参数缓存
+    this.queryCache = {};
+    this.state = {
+      filterFormValue: {
+        criteria: {
+          criterion: [
+            {value: '', property: 'productLine', condition: 'like', likeAll: true},
+            {value: '', property: 'stationCode', condition: 'like', likeAll: true},
+            {value: '1', property: 'activeFlag', condition: '='}
+          ]
+        }
+      },
+    };
+  }
+
+  componentDidMount() {
+    this.queryCache = {
+      pageSize: this.props.bindingData.tableData.pageSize,
+      ...this.state.filterFormValue,
+    };
+    this.fetchData();
+  }
+
+  fetchData = () => {
+    this.props.updateBindingData('tableData', {
+      data: {
+        ...this.queryCache
+      },
+    });
+  };
+
+  renderOperator = (value, index, record) => {
+    return (
+      <div>
+        <span>
+          <EditDialog
+            index={index}
+            record={record}
+            getFormValues={this.getFormValues}
+          />
+        </span>
+      </div>
+    );
+  };
+
+  // 编辑行后重新加载
+  getFormValues = (dataIndex, values) => {
+    // const { dataSource } = this.state;
+    // console.log(values);
+    // dataSource[dataIndex] = values;
+    // this.setState({
+    //   dataSource,
+    // });
+    this.fetchData();
+  };
+
+  // 翻页
+  changePage = (currentPage) => {
+    this.queryCache.pageIndex = currentPage;
+
+    this.fetchData();
+  };
+
+  // 查询相关
+  filterFormChange = (value) => {
+    console.log(value);
+    this.setState({
+      filterFormValue: value,
+    });
+  };
+
+  filterTable = () => {
+    // 合并参数，请求数据
+    this.queryCache = {
+      ...this.queryCache,
+      ...this.state.filterFormValue,
+    };
+    this.fetchData();
+  };
+
+  resetFilter = () => {
+    this.setState({
+      filterFormValue: {
+        criteria: {
+          criterion: [
+            {value: '', property: 'productLine', condition: 'like', likeAll: true},
+            {value: '', property: 'stationCode', condition: 'like', likeAll: true},
+            {value: '1', property: 'activeFlag', condition: '='},
+          ]
+        }
+      },
+    });
+  };
+
+  render() {
+    const tableData = this.props.bindingData.tableData;
+    const { filterFormValue } = this.state;
+
+    return (
+      <div className="selectable-table" style={styles.selectableTable}>
+        <IceContainer title="内容筛选">
+          <FilterForm
+            value={filterFormValue}
+            onChange={this.filterFormChange}
+            onSubmit={this.filterTable}
+            onReset={this.resetFilter}
+          />
+        </IceContainer>
+        <IceContainer >
+
+          <Table
+            dataSource={tableData.list}
+            isLoading={tableData.__loading}
+            primaryKey={'stationId'}
+          >
+            <Table.Column title="工厂" dataIndex="factory" width={160} />
+            <Table.Column title="生产线" dataIndex="productLine" width={100} />
+            <Table.Column title="工位号" dataIndex="stationCode" width={160} />
+            <Table.Column title="工位顺序" dataIndex="stationOrder" width={100} />
+            <Table.Column title="工位总数" dataIndex="stationSum" width={100} />
+            <Table.Column title="工位MAC" dataIndex="stationMac" width={200} />
+            <Table.Column
+              title="操作"
+              cell={this.renderOperator}
+              lock="right"
+            />
+          </Table>
+          <div style={styles.pagination}>
+            <Pagination
+              defaultCurrent={tableData.currentPage}
+              pageSize={tableData.pageSize}
+              total={tableData.total}
+              onChange={this.changePage} />
+          </div>
+        </IceContainer>
+      </div>
+    );
+  }
+}
+
+const styles = {
+  batchBtn: {
+    marginRight: '10px',
+  },
+  IceContainer: {
+    marginBottom: '20px',
+    minHeight: 'auto',
+    display: 'flex',
+    /*justifyContent: 'space-between',*/
+  },
+  pagination: {
+    textAlign: 'right',
+    paddingTop: '26px',
+  },
+};

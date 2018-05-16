@@ -1,0 +1,12 @@
+package com.atoz.vfs.service;
+
+import com.atoz.vfs.pojo.po.Vmaterial;
+
+/**
+ * 物料模块接口
+ * @author che
+ *
+ */
+public interface IVmaterialService extends IService<Vmaterial> {
+
+}

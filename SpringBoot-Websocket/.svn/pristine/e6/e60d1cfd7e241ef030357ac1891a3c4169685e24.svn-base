@@ -1,0 +1,20 @@
+package com.atoz.vfs.pojo.vo;
+
+public class MessageVO {
+	private String vinCode;
+
+    public MessageVO() {
+    }
+
+    public MessageVO(String vinCode) {
+        this.vinCode = vinCode;
+    }
+
+    public String getVinCode() {
+        return vinCode;
+    }
+
+    public void setVinCode(String vinCode) {
+        this.vinCode = vinCode;
+    }
+}

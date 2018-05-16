@@ -1,0 +1,31 @@
+package com.atoz.vfs.pojo.vo;
+
+/**
+ * 文件显示类
+ * @author che
+ *
+ */
+public class FileVO {
+	private String src;
+	private String type;
+	
+	public FileVO(String src, String type) {
+		super();
+		this.src = src;
+		this.type = type;
+	}
+	public String getSrc() {
+		return src;
+	}
+	public void setSrc(String src) {
+		this.src = src;
+	}
+	public String getType() {
+		return type;
+	}
+	public void setType(String type) {
+		this.type = type;
+	}
+	
+	
+}

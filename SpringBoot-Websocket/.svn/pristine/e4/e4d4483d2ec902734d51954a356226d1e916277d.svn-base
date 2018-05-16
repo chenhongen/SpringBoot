@@ -1,0 +1,129 @@
+package com.atoz.vfs.controller;
+
+import java.util.List;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.simp.SimpMessageSendingOperations;
+import org.springframework.messaging.simp.user.SimpUserRegistry;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.atoz.vfs.common.Constants.ResultCode;
+import com.atoz.vfs.pojo.po.Vscan;
+import com.atoz.vfs.pojo.po.Vworkshopstation;
+import com.atoz.vfs.pojo.vo.MessageVO;
+import com.atoz.vfs.pojo.vo.ResultVO;
+import com.atoz.vfs.service.IVscanService;
+
+/**
+ * 扫码推送
+ * @author che
+ *
+ */
+@RestController
+@RequestMapping("/scan")
+public class VscanController {
+	
+	@Resource
+	private IVscanService vscanService;
+//	@Autowired  
+//	private WebSocketService wsService;
+	
+//	private SimpMessageSendingOperations template;  
+//	@Autowired  
+//    public VscanController(SimpMessageSendingOperations  template) {  
+//        this.template = template;  
+//    }
+	
+	@Autowired
+	private SimpMessageSendingOperations template;
+	@Autowired
+    private SimpUserRegistry userRegistry;
+	
+	/**
+	 * 插入一条记录
+	 * @param V码，线头工位MAC/IP
+	 * @return
+	 */
+//	@MessageMapping("scan")
+//	//@RequestMapping(method=RequestMethod.POST)
+//	@SendTo("/topic/vin")
+//	public MessageVO insertVscan(@RequestParam String vinCode/*, HttpServletRequest request*/){
+//		System.out.println(vinCode);
+//		//System.out.println(request.getRemoteAddr());
+//		MessageVO m = new MessageVO();
+//		m.setVinCode(vinCode);
+//		return m;
+//	}
+	@RequestMapping(method=RequestMethod.POST)
+	public ResultVO insertVscan(@RequestParam String vinCode, @RequestParam String mac){
+		System.out.println(vinCode + "----------------" + mac);
+		int size = 0;
+		Vscan scan = new Vscan();
+		
+		// 无记录，则推送至该工头MAC对应产线顺序第一的工位
+		List<Vworkshopstation> stations = vscanService.selectStationByScan(mac);
+		
+		if((size = stations.size()) == 0)
+			return new ResultVO().error(ResultCode.FAIL, "该工头对应产线MAC有误！");
+		
+		// 否则，推送至当前工位顺序+1 个工位上
+		if(this.template != null)
+			stations.stream().forEach(station -> {
+				MessageVO m = new MessageVO();
+				m.setVinCode(vinCode);
+				m.setMac(station.getStationMac());
+				this.template.convertAndSendToUser(mac, "/queue/vin", m); // 定向推送
+				//this.template.convertAndSend("/topic/vin", m); // 广播推送
+			});
+		
+		// 新增扫码记录
+		Vworkshopstation currentStation = stations.get(size-1);
+		scan.setActiveFlag((short) 1);
+		scan.setVinCode(vinCode);
+		scan.setFactoryCode(currentStation.getFactoryCode());
+		scan.setStationId(currentStation.getStationId());
+		scan.setStationOrder(currentStation.getStationOrder());
+		scan.setWorkshopCode(currentStation.getWorkshopCode());
+		scan.setWorkshopLine(currentStation.getWorkshopLine());
+		int i = vscanService.insertEntity(scan);
+		
+		System.out.println("在线用户数："+userRegistry.getUserCount());
+		
+		userRegistry.getUsers().forEach((user) -> System.out.println("userName:"+user.getName()));
+//		wsService.init();
+//		wsService.send("topic", "vin", m);
+		
+		if(i > 0) {
+			return new ResultVO().ok();
+		} else {
+			return new ResultVO().error();
+		}
+	}
+	/**
+	 * 重新推送/回复队列
+	 * @param 线头工位MAC/IP
+	 * @return
+	 */
+	@RequestMapping(method=RequestMethod.PUT)
+	public ResultVO updateVscan(HttpServletRequest request){
+
+		return new ResultVO().ok();
+	}
+	
+	/**
+	 * 清除队列
+	 * @param 线头工位MAC/IP
+	 * @return
+	 */
+	@RequestMapping(method=RequestMethod.DELETE)
+	public ResultVO deleteVscan(HttpServletRequest request){
+
+		return new ResultVO().ok();
+	}
+}
