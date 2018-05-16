@@ -1,16 +1,16 @@
 # What u can find in here?
 Some projects about Spring Boot.
 一些关于SpringBoot的案例。
-- Shiro 单点登录
-- Buji-Pac4j CAS认证
+- Shiro         单点登录
+- Buji-Pac4j    CAS认证
 - Redis 
 - Mybatis 
-- Jsper 整合JSP页面
-- Parent 多模块项目
+- Jsper         整合JSP页面
+- Parent        多模块项目
+- Swagger       Restful API
 
 # More will come soon ...
 - Websocket 201805
-- Swagger2  201805
 - Ehcache   201805
 - React     201806
 
