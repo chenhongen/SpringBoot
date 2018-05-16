@@ -1,0 +1,121 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.che</groupId>
+  <artifactId>SpringBoot-Swagger</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <name>SpringBoot-Swagger</name>
+  <description>rebey.cn</description>
+  
+  <parent>
+	<groupId>org.springframework.boot</groupId>
+	<artifactId>spring-boot-starter-parent</artifactId>
+	<version>2.0.0.RELEASE</version>
+	<relativePath/> <!-- lookup parent from repository -->
+  </parent>
+
+  <properties>
+	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+	<java.version>1.8</java.version>
+  </properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		
+		<!--springBoot 的aop-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-aop</artifactId>
+        </dependency>
+        
+        <!-- web依赖 -->
+ 		<dependency>
+        	<groupId>org.springframework.boot</groupId>
+         	<artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+        	<groupId>javax.servlet</groupId>
+         	<artifactId>javax.servlet-api</artifactId>
+        	<scope>provided</scope>
+        </dependency>
+        <dependency>
+        	<groupId>javax.servlet</groupId>
+        	<artifactId>jstl</artifactId>
+        </dependency>
+		
+		<!--支持热启动jar包-->
+		<dependency>
+		      <groupId>org.springframework.boot</groupId>
+		      <artifactId>spring-boot-devtools</artifactId>
+		      <optional>true</optional>
+		      <!-- optional=true,依赖不会传递，该项目依赖devtools；之后依赖该项目的项目如果想要使用devtools，需要重新引入 -->
+		</dependency>
+		<dependency>
+           	<groupId>org.springframework</groupId>
+           	<artifactId>springloaded</artifactId>
+           	<version>1.2.8.RELEASE</version>
+    		<scope>test</scope>
+        </dependency>
+        
+        <!-- 格式化对象，方便输出日志 -->
+        <!-- <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>${fastjson.version}</version>
+        </dependency> -->
+		
+		<!--包含支持UI模版（Velocity，FreeMarker，JasperReports），
+			邮件服务，脚本服务(JRuby)，缓存Cache（EHCache），任务计划Scheduling（uartz）。-->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context-support</artifactId>
+		</dependency>
+		<!-- 缓存 -->
+		<dependency>
+			<groupId>net.sf.ehcache</groupId>
+			<artifactId>ehcache-core</artifactId>
+			<version>2.6.11</version>
+		</dependency>
+		
+		<!-- swagger -->
+		<dependency>
+		    <groupId>io.springfox</groupId>
+		    <artifactId>springfox-swagger2</artifactId>
+		    <version>2.8.0</version>
+		</dependency>
+		<dependency>
+		    <groupId>io.springfox</groupId>
+		    <artifactId>springfox-swagger-ui</artifactId>
+		    <version>2.8.0</version>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				
+				<dependencies>
+		       	<!-- spring热部署-->
+		       		<dependency>
+		            	<groupId>org.springframework</groupId>
+		            	<artifactId>springloaded</artifactId>
+		            	<version>1.2.8.RELEASE</version>
+		         	</dependency>
+		    	</dependencies>
+			</plugin>
+		</plugins>
+	</build>
+
+
+</project>
