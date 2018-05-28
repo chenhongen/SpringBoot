@@ -1,6 +1,7 @@
 # What u can find in here?
-Some projects about Spring Boot.<br>
-一些关于SpringBoot的案例。
+Some projects about Spring Boot, Help you quick start.<br>
+一些关于SpringBoot的案例，帮助你快速搭建。
+
 - Shiro         单点登录
 - Buji-Pac4j    CAS认证
 - Redis 
@@ -9,7 +10,7 @@ Some projects about Spring Boot.<br>
 - Parent        多模块项目
 - Swagger       Restful API
 - Websocket     通讯/广播/...
-- CXF(jaxws)    webservice/wsdl
+- CXF(jaxws)    Webservice/wsdl
 
 # More will come soon ...
 - Ehcache   201805
