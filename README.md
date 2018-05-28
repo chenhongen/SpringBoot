@@ -9,7 +9,7 @@ Some projects about Spring Boot.<br>
 - Parent        多模块项目
 - Swagger       Restful API
 - Websocket     通讯/广播/...
-- CXF(ws)       webservice/wsdl
+- CXF(jaxws)    webservice/wsdl
 
 # More will come soon ...
 - Ehcache   201805
