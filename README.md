@@ -12,6 +12,8 @@ Some projects about Spring Boot.<br>
 
 # More will come soon ...
 - Ehcache   201805
+- CXF       201806
+- Dubbo     201806
 - React     201806
 
 # Download single will be fast
