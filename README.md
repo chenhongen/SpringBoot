@@ -10,12 +10,13 @@ Some projects about Spring Boot, Help you quick start.<br>
 - Parent        多模块项目
 - Swagger       Restful API
 - Websocket     通讯/广播/...
-- CXF(jaxws)    Webservice/wsdl
+- CXF(jaxws)    Webservice/wsdl(1.5.13.RELEASE)
 
 # More will come soon ...
-- Ehcache   201807
-- Dubbo     201808
-- React     201809
+- Muti DataSource 201808
+- Ehcache   201809
+- Dubbo     201809
+- React     201810
 
 # Download single will be fast
 use Repo Downloader that is a browser plug-in.<br>
